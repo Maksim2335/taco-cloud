@@ -41,7 +41,7 @@ public class DesignTacoController {
 //                new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
 //        );
 //        Type[] types = Ingredient.Type.values();
-        List<Ingredient> ingredients = ingredientRepo.findAll();
+        List<Ingredient> ingredients = (List<Ingredient>) ingredientRepo.findAll();
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
