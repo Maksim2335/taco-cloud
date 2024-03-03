@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 public class TacoOrder {
 
     @Id
