@@ -4,6 +4,7 @@ import com.maksim2335.tacocloud.Repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,8 +50,10 @@ public class SecurityConfig {
                 .formLogin(formLoginConfigurer -> formLoginConfigurer
                         .loginPage("/login")
                         .defaultSuccessUrl("/design"))
-//                .oauth2Login(new Customizer<OAuth2LoginConfigurer<HttpSecurity>>() {
-//                    @Override
+                .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer
+                        .ignoringRequestMatchers("/h2-console/**"))
+                .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 //                    public void customize(OAuth2LoginConfigurer<HttpSecurity> httpSecurityOAuth2LoginConfigurer) {
 //                        httpSecurityOAuth2LoginConfigurer.loginPage()
 //                    }
@@ -60,5 +63,4 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/"))
                 .build();
     }
-
 }
