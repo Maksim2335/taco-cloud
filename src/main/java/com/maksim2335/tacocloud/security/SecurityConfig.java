@@ -3,6 +3,7 @@ package com.maksim2335.tacocloud.security;
 import com.maksim2335.tacocloud.Repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,13 +46,16 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/design", "/orders").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/ingredients").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/ingredients/**").hasRole("ADMIN")
                         .requestMatchers("/", "/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLoginConfigurer -> formLoginConfigurer
                         .loginPage("/login")
                         .defaultSuccessUrl("/design"))
                 .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer
-                        .ignoringRequestMatchers("/h2-console/**"))
+                        .ignoringRequestMatchers("/h2-console/**")
+                        .disable())
                 .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 //                    public void customize(OAuth2LoginConfigurer<HttpSecurity> httpSecurityOAuth2LoginConfigurer) {

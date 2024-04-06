@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost/tacocloud
-    username: root
+    url: jdbc:postgresql://localhost:5432/tacocloud
+    username: postgres
     password: 5240354
   jpa:
     generate-ddl: true

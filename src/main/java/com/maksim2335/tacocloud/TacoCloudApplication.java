@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -44,13 +45,14 @@ public class TacoCloudApplication implements WebMvcConfigurer {
 		};
 	}
 
-	@Bean
+//	@Bean
 	public CommandLineRunner tacoDataLoader(
 			IngredientRepository repo,
 			UserRepository userRepo,
 			PasswordEncoder encoder,
 			TacoRepository tacoRepo) {
 		return args -> {
+			encoder.encode("dsa");
 			Ingredient flourTortilla = new Ingredient(
 					"FLTO", "Flour Tortilla", Type.WRAP);
 			Ingredient cornTortilla = new Ingredient(
@@ -99,5 +101,10 @@ public class TacoCloudApplication implements WebMvcConfigurer {
 					lettuce, salsa));
 			tacoRepo.save(taco3);
 		};
+	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 }
