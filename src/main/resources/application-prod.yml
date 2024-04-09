@@ -5,6 +5,11 @@ spring:
     password: 5240354
   jpa:
     generate-ddl: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
 logging:
   level:
     tacos: WARN
